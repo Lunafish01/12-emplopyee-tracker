@@ -94,7 +94,7 @@ function viewAllRolesMenu() {
         if (err) {
             console.log(err);
         }
-        console.log(data);
+        console.table(data);
         init();
     });
 };
@@ -106,14 +106,33 @@ function viewAllEmployeesMenu() {
         if (err) {
             console.log(err);
         }
-        console.log(data);
+        console.table(data);
         init();
     });
 };
 
 //build function to ADD to the department table
 //add department name and add it database
-// function addDepartmentMenu();
+function addDepartmentMenu() {
+    inquirer
+    .prompt([
+        {
+            type: "input",
+            name: "newDepartment",
+            message: "Enter name for new department"
+        },
+    ])
+    .then((response) => {
+        db.query( 'INSERT INTO department (name) VALUES ("${response.newDepartment}")',
+        function (err, data) {
+            if (err) {
+                console.log(err);
+            }
+            console.log("Department added!");
+            init();
+        });
+    });
+};
 
 //build function to ADD to the role tale
 //add role name, salary and department for new entry and add it to database
