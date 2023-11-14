@@ -77,17 +77,41 @@ function exit() {
 
 //build function to view ALL from the department table
 //show department names and department ids
-// function viewDepartmentsMenu();
+function viewDepartmentsMenu() {
+    db.query("SELECT * FROM department", function (err, data) {
+        if(err) {
+            console.log(err);
+        }
+        console.table(data);
+        init();
+    });
+};
 
 // build function to view ALL from the role table
 //show job title, role id, department and salary
-// function viewAllRolesMenu();
+function viewAllRolesMenu() {
+    db.query("SELECT * FROM role", function (err, data) {
+        if (err) {
+            console.log(err);
+        }
+        console.log(data);
+        init();
+    });
+};
 
 //build function to view ALL from the employee table
 //show employee id, first name, last name, job title, department, salary and manager
-// function viewAllEmployeesMenu();
+function viewAllEmployeesMenu() {
+    db.query("SELECT * FROM employee", function (err,data) {
+        if (err) {
+            console.log(err);
+        }
+        console.log(data);
+        init();
+    });
+};
 
-//builkd function to ADD to the department table
+//build function to ADD to the department table
 //add department name and add it database
 // function addDepartmentMenu();
 
