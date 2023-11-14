@@ -1,16 +1,15 @@
 const inquirer = require('inquirer');
 const mysql = require('mysql2');
 
-const db = mysql.createConnection(
-    {
-        host: "localhost",
-        user: "root",
-        database: "employee_db",
-        password: "Montana1100$$",
-    },
-    console.log("Connected to the employee_db database.")
-    );
-    
+const db = mysql.createConnection({
+    host: "localhost",
+    user: "root",
+    database: "employee_db",
+    password: "Montana1100$$",
+}, () => {
+    console.log("Connected to the employee_db database.");
+});
+
 //build function to select from start menu and move to the newly selected menu
 function init() {
     return inquirer
@@ -112,7 +111,7 @@ function viewAllEmployeesMenu() {
 };
 
 //build function to ADD to the department table
-//add department name and add it database
+//add department name and add it to database
 function addDepartmentMenu() {
     inquirer
     .prompt([
@@ -123,7 +122,7 @@ function addDepartmentMenu() {
         },
     ])
     .then((response) => {
-        db.query( 'INSERT INTO department (name) VALUES ("${response.newDepartment}")',
+        db.query( `INSERT INTO department (name) VALUES ("${response.newDepartment}")`,
         function (err, data) {
             if (err) {
                 console.log(err);
@@ -132,16 +131,162 @@ function addDepartmentMenu() {
             init();
         });
     });
-};
+}
 
 //build function to ADD to the role tale
 //add role name, salary and department for new entry and add it to database
-// function addRoleMenu();
+function addRoleMenu() {
+    inquirer
+    .prompt([
+        {
+            type: "input",
+            name: "newRole",
+            message: "Add name for new role."
+        },
+        {
+            type: "input",
+            name: "salary",
+            message: "Entered desired salary for this role."
+        },
+        {
+            type: "list",
+            name: "departmentId",
+            message: "Enter department for new role",
+            choices: [
+                "Sales",
+                "Engineering",
+                "Finance",
+                "Legal"
+            ]
+        }
+    ])
+    .then((response) => {
+        db.query( `INSERT INTO role SET ?`, 
+        {
+            title: response.newRole,
+            salary: response.salary,
+            department_id: response.departmentId
+        },
+        (err, data) => {
+            if (err) {
+                console.log(err);
+            } else {
+                console.log("Added role!");
+            }
+        }
+        );
+    });
+};
 
 //build function to ADD to the employee table
 //add first name, last name, role and manager for new entry and add to database
-// function AddEmployeeMenu();
+function AddEmployeeMenu() {
+    inquirer
+    prompt([
+        {
+            type: "input",
+            name: "firstName",
+            message: "Enter first name of new employee."
+        },
+        {
+            type: "input",
+            name: "lastName",
+            message: "Enter last name of new employee."
+        },
+        {
+            type: "list",
+            name: "roleId",
+            message: "Enter new role fr new employee.",
+            choices: [
+                "Sales Lead",
+                "Salesperso",
+                "Lead Engineer",
+                "Software Engineer",
+                "Account Manager",
+                "Accountant",
+                "Legal Team Lead",
+                "Lawyer"
+            ]
+        },
+        {
+            type: "list",
+            name: "manager",
+            message: "Select correct manager for new emplopyee.",
+            choices: [
+                "John Doe",
+                "Ashley Rodriguez",
+                "Kunal Singh",
+                "Sarah Lourd"
+            ]
+        }
+    ])
+    .then((response) => {
+        db.query(
+            `INSERT INTO employee SET ?`,
+            {
+                first_name: response.firstName,
+                last_name: response.lastName,
+                role_id: response.roleId,
+                manager_id: response.manager
+            },
+            (err, data) => {
+                if (err) {
+                    console.log(err);
+                } else {
+                    console.log("Added new emplopyee!")
+                    init();
+                }
+            }
+        );
+    });
+};
 
 //build function to update the employee role
 //select an employee and update with new role and add new info to the database
-// function updateEmployeeRoleMenu();
+function updateEmployeeRoleMenu() {
+    inquirer
+    .prompt([
+        {
+            type: "list",
+            name: "employeeId",
+            message: "Choose an employee to update.",
+            choices: [
+                "John Doe",
+                "Mike Chan",
+                "Ashley Rodriguez",
+                "Kevin Tupik",
+                "Kunal Singh",
+                "Malia Brown",
+                "Sarah Lourd",
+                "Tom Allen"
+            ]
+        },
+        {
+            type: "list",
+            name: "roleId",
+            message: "Enter new role for new employee.",
+            choices: [
+                "Sales Lead",
+                "Salesperson",
+                "Lead Engineer",
+                "Software Engineer",
+                "Account Manager",
+                "Accountant",
+                "Legal Team Lead",
+                "Lawyer"
+            ]
+        }
+    ])
+    .then ((response) => {
+        db.query(`UPDATE employee SET role_id = ${response.roleId} WHERE id = ${response.employeeId}`,
+            (err, data) => {
+                if (err) {
+                    console.log(err);
+                } else {
+                    console.log("Updated employee role");
+                    init();
+                }
+            }
+        )
+    });
+};
