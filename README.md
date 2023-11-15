@@ -51,3 +51,6 @@ This application can be used to track various information about the employees of
 - I will continue to try to work on this project after submission to attempt to fix the issues I'm running into.
 
 ## Screenshot and other media
+
+[Video Demo](https://drive.google.com/drive/folders/1ld8qP05-50uPI7TE-bc1Jsb8OoSAoyVD)
+
