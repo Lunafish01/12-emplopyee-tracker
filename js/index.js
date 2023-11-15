@@ -6,7 +6,13 @@ const db = mysql.createConnection({
     user: "root",
     database: "employee_db",
     password: "Montana1100$$",
-}, () => {
+});
+
+db.connect((err) => {
+    if (err) {
+        console.error('Error connecting to database:', err);
+        return;
+    }
     console.log("Connected to the employee_db database.");
 });
 
@@ -28,7 +34,7 @@ function init() {
                 "Update an employee role",
                 "Exit",
             ],
-            default: "View All Employees",
+            default: "View all employees",
         },
     ])
     .then(({ menuSelect }) => {
@@ -55,7 +61,7 @@ function init() {
                 break;
             case "Add an employee":
                 console.clear();
-                AddEmployeeMenu();
+                addEmployeeMenu();
                 break;
             case "Update an employee role":
                 console.clear();
