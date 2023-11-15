@@ -39,7 +39,7 @@ function init() {
     ])
     .then(({ menuSelect }) => {
         switch (menuSelect) {
-            case "View all Departments":
+            case "View all departments":
                 console.clear();
                 viewDepartmentsMenu();
                 break;
@@ -251,7 +251,7 @@ function AddEmployeeMenu() {
 //select an employee and update with new role and add new info to the database
 function updateEmployeeRoleMenu() {
     inquirer
-    .prompt([
+        .prompt([
         {
             type: "list",
             name: "employeeId",
