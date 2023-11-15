@@ -143,52 +143,52 @@ function addDepartmentMenu() {
 //add role name, salary and department for new entry and add it to database
 function addRoleMenu() {
     inquirer
-    .prompt([
-        {
-            type: "input",
-            name: "newRole",
-            message: "Add name for new role."
-        },
-        {
-            type: "input",
-            name: "salary",
-            message: "Entered desired salary for this role."
-        },
-        {
-            type: "list",
-            name: "departmentId",
-            message: "Enter department for new role",
-            choices: [
-                "Sales",
-                "Engineering",
-                "Finance",
-                "Legal"
-            ]
-        }
-    ])
-    .then((response) => {
-        db.query( `INSERT INTO role SET ?`, 
-        {
-            title: response.newRole,
-            salary: response.salary,
-            department_id: response.departmentId
-        },
-        (err, data) => {
-            if (err) {
-                console.log(err);
-            } else {
-                console.log("Added role!");
+        .prompt([
+            {
+                type: "input",
+                name: "newRole",
+                message: "Add name for new role."
+            },
+            {
+                type: "input",
+                name: "salary",
+                message: "Entered desired salary for this role."
+            },
+            {
+                type: "list",
+                name: "departmentId",
+                message: "Enter department for new role",
+                choices: [
+                    "Sales",
+                    "Engineering",
+                    "Finance",
+                    "Legal"
+                ]
             }
-        }
-        );
-    });
+        ])
+        .then((response) => {
+            db.query( `INSERT INTO role SET ?`, 
+            {
+                title: response.newRole,
+                salary: response.salary,
+                department_id: response.departmentId
+            },
+            (err, data) => {
+                if (err) {
+                    console.log(err);
+                } else {
+                    console.log("Added role!");
+                }
+            }
+            );
+        });
 };
 
 //build function to ADD to the employee table
 //add first name, last name, role and manager for new entry and add to database
-function AddEmployeeMenu() {
+function addEmployeeMenu() {
     inquirer
-    prompt([
+    .prompt([
         {
             type: "input",
             name: "firstName",
@@ -251,7 +251,7 @@ function AddEmployeeMenu() {
 //select an employee and update with new role and add new info to the database
 function updateEmployeeRoleMenu() {
     inquirer
-        .prompt([
+    .prompt([
         {
             type: "list",
             name: "employeeId",
